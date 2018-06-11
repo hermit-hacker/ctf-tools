@@ -1,5 +1,4 @@
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-alias cdblog='cd /var/www/cryptolingus.net/www/data/blog'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias fixem='apt-get update && apt-get -y dist-upgrade && apt-get -y autoremove'
