@@ -24,7 +24,7 @@ echochars() {
 
 # Function: centerheader
 # Description: Prints the specified text centered on the terminal (auto adjusts for terminal size)
-			   with "## " before it and " ##" after it, and spacing to pad the remainder
+#	       with "## " before it and " ##" after it, and spacing to pad the remainder
 # Arguments: ARG1 = Required: The text to center
 # Depends On: echochars
 centerheader() {
