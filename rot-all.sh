@@ -1,7 +1,7 @@
 #!/bin/bash
 UNMOD=$1
 UPPER=$(echo $UNMOD | tr '[a-z]' '[A-Z]')
-echo "====== Modified: Uppercase Only ROT-26"
+echo "====== Modified: Uppercase Only ROT-26 ======"
 echo
 echo $UPPER | tr '[A-Z]' '[B-ZA]'
 echo $UPPER | tr '[A-Z]' '[C-ZA-B]'
