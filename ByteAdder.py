@@ -2,7 +2,7 @@
 # Program  : ByteAdder.py
 # Author   : Brian Mork ("Hermit")
 # Date     : 2019-04-01
-# Contact  : https://stackattack.net
+# Contact  : https://blog.stackattack.net
 # Requires : Python3+, Hexdump (https://pypi.org/project/hexdump/) by Anatoly Techtonik <techtonik@gmail.com>
 import sys
 import hexdump
