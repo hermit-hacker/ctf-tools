@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # Program  : ByteAdder.py
 # Author   : Brian Mork ("Hermit")
+# Thanks to: haystack-ia (https://github.com/haystack-ia) for removing Hexdump dependency
 # Date     : 2019-04-01
 # Contact  : https://blog.stackattack.net
 # Requires : Python3+
@@ -123,6 +124,7 @@ THEOPTION = sys.argv[1]
 
 showHeader()
 
+# Thanks to haystack-ia for conversion of if/elif/else to dictionary
 funs = {
     'sum': sumBytes,
     'high': sumHighNibble,
@@ -139,10 +141,8 @@ funs = {
         ]
 }
 
-
 fun_to_run = funs.get(THEOPTION, None)
 
-#I'm just goofing around here tbh
 if fun_to_run is None:
     showInvalidMode()
 elif type(fun_to_run) is list:
