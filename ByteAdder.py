@@ -3,9 +3,8 @@
 # Author   : Brian Mork ("Hermit")
 # Date     : 2019-04-01
 # Contact  : https://blog.stackattack.net
-# Requires : Python3+, Hexdump (https://pypi.org/project/hexdump/) by Anatoly Techtonik <techtonik@gmail.com>
+# Requires : Python3+
 import sys
-import hexdump
 import os
 
 THEFILE = ''
@@ -44,70 +43,68 @@ def printSumResult(CKSUM):
     print('     Sum in hex is: ', str(CKSUMH))
     print()
 
+
+def __masklist(AFILE, mask, shift=0):
+    '''
+    returns list of masked bytes in bytes object
+    '''
+
+    return [(x & mask) >> shift for x in AFILE]
+
+def __masksum(AFILE, mask, shift=0):
+    '''
+    sums (byte & mask) for byte in AFILE
+    '''
+
+    return sum(__masklist(AFILE, mask, shift=shift))
+
 def sumBytes(AFILE):
+    '''
+    prints sum of bytes in file
+    '''
+
     print('[Summing all bytes]')
-    hd=hexdump.dump(AFILE, size=2, sep=' ')
-    cksum=0
-    for VAL in hd.split(' '):
-        byteval = int(VAL, base=16)
-        cksum=cksum+byteval
+    cksum = __masksum(AFILE, 0xFF)
     printSumResult(cksum)
 
 def sumHighNibble(AFILE):
+    '''
+    prints sum of high nibbles of a bytes object
+    '''
+
     print('[Summing high nibble bytes]')
-    hd=hexdump.dump(AFILE, size=1, sep=' ')
-    tfcheck=0
-    cksum=0
-    for VAL in hd.split(' '):
-        if (tfcheck == 0):
-            byteval = int(VAL, base=16)
-            cksum=cksum+byteval
-            tfcheck = 1
-        else:
-            tfcheck = 0
+    cksum = __masksum(AFILE, 0xF0, shift=4)
     printSumResult(cksum)
 
 def sumLowNibble(AFILE):
+    '''
+    prints sum of low nibbles of a bytes object
+    '''
+
     print('[Summing low nibble bytes]')
-    hd=hexdump.dump(AFILE, size=1, sep=' ')
-    tfcheck=1
-    cksum=0
-    for VAL in hd.split(' '):
-        if (tfcheck == 0):
-            byteval = int(VAL, base=16)
-            cksum=cksum+byteval
-            tfcheck = 1
-        else:
-            tfcheck = 0
+    cksum = __masksum(AFILE, 0x0F)
     printSumResult(cksum)
 
 def sumLSBs(AFILE):
-    print('[Summing least significant bytes]')
-    hd=hexdump.dump(AFILE, size=1, sep=' ')
-    tfcheck=1
-    cksum=0
-    for VAL in hd.split(' '):
-        if (tfcheck == 0):
-            byteval = int(VAL, base=16)
-            cksum=cksum + (byteval & 1)
-            tfcheck = 1
-        else:
-            tfcheck = 0
-    printSumResult(cksum)
+    '''
+    prints sum of least significant bits of a bytes object
+    '''
 
+    print('[Summing least significant bits]')
+    bit_sum = __masksum(AFILE, 0x1)
+    printSumResult(bit_sum)
+    
+    
 def printLSBs(AFILE):
-    print('[Printing least significant bytes]')
-    hd=hexdump.dump(AFILE, size=1, sep=' ')
-    tfcheck=1
-    bytestream=''
-    for VAL in hd.split(' '):
-        if (tfcheck == 0):
-            byteval = int(VAL, base=16)
-            bytestream=bytestream + str(byteval & 1)
-            tfcheck = 1
-        else:
-            tfcheck = 0
-    print(bytestream)
+    '''
+    prints least significant bits of a bytes object
+    '''
+
+    print('[Printing least significant bits]')
+    bitstream = ''.join([str(x) for x in __masklist(AFILE, 0x1)])
+    print(bitstream)
+
+
 
 if ((len(sys.argv) != 3)):
     showHelpInfo()
@@ -126,29 +123,32 @@ THEOPTION = sys.argv[1]
 
 showHeader()
 
-if (THEOPTION == "sum"):
-    sumBytes(theFile)
-elif (THEOPTION == "high"):
-    sumHighNibble(theFile)
-elif (THEOPTION == 'low'):
-    sumLowNibble(theFile)
-elif (THEOPTION == 'lsb'):
-    sumLSBs(theFile),
-elif (THEOPTION == 'plsb'):
-    printLSBs(theFile)
-elif (THEOPTION == 'alls'):
-    sumBytes(theFile)
-    sumHighNibble(theFile)
-    sumLowNibble(theFile)
-    sumLSBs(theFile)
-elif (THEOPTION == 'allall'):
-    sumBytes(theFile)
-    sumHighNibble(theFile)
-    sumLowNibble(theFile)
-    sumLSBs(theFile)
-    printLSBs(theFile)
-else:
+funs = {
+    'sum': sumBytes,
+    'high': sumHighNibble,
+    'low': sumLowNibble,
+    'lsb': sumLSBs,
+    'plsb': printLSBs,
+    'alls': [#ALL!
+        sumBytes, sumHighNibble, sumLowNibble,
+        sumLSBs
+    ],
+    'allall': [#NO, ALL!
+        sumBytes, sumHighNibble, sumLowNibble,
+        sumLSBs, printLSBs
+        ]
+}
+
+
+fun_to_run = funs.get(THEOPTION, None)
+
+#I'm just goofing around here tbh
+if fun_to_run is None:
     showInvalidMode()
+elif type(fun_to_run) is list:
+    [fun(theFile) for fun in fun_to_run]
+else:
+    fun_to_run(theFile)
 
 showFooter()
 
