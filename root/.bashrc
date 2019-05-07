@@ -71,6 +71,7 @@ fi
 alias ls='ls -la --color'
 alias cdshare='cd /mnt/hgfs/SharedVM/'
 alias oscp='/usr/local/bin/startOSCP.sh'
+alias getports='grep "/tcp" *.nmap'
 
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
