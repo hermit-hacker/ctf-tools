@@ -72,6 +72,11 @@ alias ls='ls -la --color'
 alias cdshare='cd /mnt/hgfs/SharedVM/'
 alias oscp='/usr/local/bin/startOSCP.sh'
 alias getports='grep "/tcp" *.nmap'
+alias sss='searchsploit"
+alias ssm='searchsploit -m'
+alias msnmp='/usr/local/bin/multi-snmp.sh'
+alias smbrampage='/usr/local/bin/smb-rampage.sh'
+
 
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
