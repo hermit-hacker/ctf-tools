@@ -1,6 +1,6 @@
 #~/bin/bash
 if [ $# -ne 1 ]; then
-	echo "Syntax: SmbRampage.sh [TARGET]"
+	echo "Syntax: smb-rampage.sh [TARGET]"
 	exit 1
 fi
 
