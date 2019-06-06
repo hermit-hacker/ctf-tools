@@ -1,6 +1,6 @@
 #!/bin/bash
 if [ $# -ne 3 ]; then
-	echo "Usage: ./SearchStat.sh {resultsfile} {targetdomain} {updateinterval}"
+	echo "Usage: ./searchstat.sh {resultsfile} {targetdomain} {updateinterval}"
 	exit 1
 fi
 
