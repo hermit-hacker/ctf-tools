@@ -1,4 +1,10 @@
 #!/bin/bash
+#
+# Program  : cowroll.sh
+# Author   : Brian Mork ("Hermit")
+# Date     : 2019-04-18
+# Contact  : https://blog.stackattack.net
+#
 apt-get install -y lolcat cowsay > /dev/null 2>&1
 wget -O- https://raw.githubusercontent.com/doyler/SecurityTools/master/DNSRickroll/lyrics.txt 2>/dev/null >/tmp/a.txt
 echo "Enjoy! Love, Hermit" >> /tmp/a.txt
