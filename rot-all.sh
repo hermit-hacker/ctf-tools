@@ -184,3 +184,6 @@ echo $UNMOD | tr '[A-Za-z0-9]' '[6-9A-Za-z0-5]'
 echo $UNMOD | tr '[A-Za-z0-9]' '[7-9A-Za-z0-6]'
 echo $UNMOD | tr '[A-Za-z0-9]' '[8-9A-Za-z0-7]'
 echo $UNMOD | tr '[A-Za-z0-9]' '[9A-Za-z0-8]'
+echo "====== Unmodified: ATBASH ======"
+echo
+echo $UNMOD | tr '[A-Za-z]' '[ZYXWVUTSRQPONMLKJIHGFEDCBAzyxwvutsrqponmlkjihgfedcba]'
