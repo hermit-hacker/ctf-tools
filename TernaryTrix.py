@@ -101,7 +101,9 @@ def makeTernary(CLEARTEXT, RESERVEDFLAG=0):
     print('-'.join(CONVERTEXT))
 
 def makeASCII(TERNTEXT, RESERVEDFLAG=0):
-    if RESERVEDFLAG != 0:
+    # Use offest of 95 for A=0 indexing, 96 for standard A=1 indexing
+    OFFSETVALUE = 96
+    if RESERVEDFLAG > 1:
         print('Converting the following to ASCII')
         print(TERNTEXT)
         print('----------------------------------')
@@ -110,7 +112,7 @@ def makeASCII(TERNTEXT, RESERVEDFLAG=0):
     for TERNVALUE in WORKTEXT:
         NORMALVALUE = int(TERNVALUE)
         if NORMALVALUE != 0:
-            RECOVERVALUE = chr(int(changebase(NORMALVALUE, 3, 10))+96)
+            RECOVERVALUE = chr(int(changebase(NORMALVALUE, 3, 10))+OFFSETVALUE)
             CONVERTEXT.append(RECOVERVALUE)
         else:
             CONVERTEXT.append(" ")
@@ -174,8 +176,24 @@ if CHOSENMODE is None:
     showInvalidMode()
 else:
     showHeader()
-    CHOSENMODE(THETEXT, 1)
+    CHOSENMODE(THETEXT, 0)
 
 showFooter()
 
 sys.exit(0)
+
+
+############### TEST VALUES
+#
+# Encryption using simple string:
+# encrypt 'Testing the sample' --> 202-012-201-202-100-112-021-000-202-022-012-000-201-001-111-121-110-012
+#
+# Decryption using result of encryption
+# decrypt '202-012-201-202-100-112-021-000-202-022-012-000-201-001-111-121-110-012' --> 'TESTING THE SAMPLE'
+# 
+# Random assignment of consistent position values to encrypted simple string:
+# brute 'AOX-BNX-AOZ-AOX-COY-CNX-BMZ-BOY-AOX-BMX-BNX-BOY-AOZ-BOZ-CNZ-CMZ-CNY-BNX' --> (excerpt of output below)
+#       [201-210-120]  SDRSKMFBSGDBR LOND
+#       [201-210-201]  TESTING THE SAMPLE       <-- MATCH
+#       [201-210-210]  TERTJNFATHEAR LOME
+#
